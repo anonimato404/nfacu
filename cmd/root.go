@@ -9,7 +9,7 @@ import (
 )
 
 func Main() {
-	configData, errorReadingConfig := os.ReadFile("demo.json")
+	configData, errorReadingConfig := os.ReadFile("nfacu.json")
 
 	if errorReadingConfig != nil {
 		fmt.Printf("Error reading NFACU config file: %s\n", errorReadingConfig)

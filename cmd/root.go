@@ -3,6 +3,7 @@ package cmd
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/UltiRequiem/nfacu/internal"
 	"os"
 	"strings"
 )
@@ -14,7 +15,7 @@ func Main() {
 		fmt.Printf("Error reading NFACU config file: %s\n", errorReadingConfig)
 	}
 
-	var projectsConfig NFACUConfig
+	var projectsConfig internal.NFACUConfig
 
 	errorUnmarshalling := json.Unmarshal(configData, &projectsConfig)
 
@@ -37,7 +38,7 @@ func Main() {
 		for _, line := range temp {
 			for key := range project.Settings {
 				if strings.Contains(line, fmt.Sprintf(`"%s"`, key)) {
-					configRawData += parseLine(key, project.Settings[key]) + "\n"
+					configRawData += internal.ParseLine(key, project.Settings[key]) + "\n"
 					break
 				} else {
 					configRawData += line + "\n"
@@ -52,10 +53,5 @@ func Main() {
 			fmt.Printf("Error writing project %s config: %s\n", project.Path, errorWritingProjectConfig)
 		}
 	}
-
-}
-
-func parseLine(key, val string) string {
-	return fmt.Sprintf(` <add key="%s" value="%s" />`, key, val)
 
 }

@@ -1,4 +1,4 @@
-package cmd
+package internal
 
 type NFACUConfigObject struct {
 	Path     string            `json:"path"`

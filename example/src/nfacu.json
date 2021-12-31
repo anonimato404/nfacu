@@ -2,7 +2,8 @@
   {
     "path": "/home/ulti/disk/repos/nfacu/example/src/GATO.Genesys.Worker/App.config",
     "settings": {
-      "DialerEventTopic.Name": "dialer-events-topic-eliaz"
+      "DialerEventTopic.Name": "dialer-events-topic-reka",
+      "Metrics.AppInsights.FlushInterval": "haha"
     }
   }
 ]

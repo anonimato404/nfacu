@@ -33,20 +33,20 @@ func Main() {
 		configRawData := ""
 
 		for _, line := range rawProjectConfig {
+			lineAdded := false
 			for key := range project.Settings {
 				if strings.Contains(line, fmt.Sprintf(`"%s"`, key)) {
 					configRawData += internal.ParseLine(key, project.Settings[key])
+					lineAdded = true
 					fmt.Printf(`Changing "%s" property to "%s" on "%s".`+"\n", key, project.Settings[key], project.Path)
-				} else {
-					configRawData += line
 				}
-
-				if !(line == "\n") {
-					configRawData += "\n"
-				}
-
-				break
 			}
+
+			if !lineAdded {
+				configRawData += line
+			}
+
+			configRawData += "\n"
 		}
 
 		errorSavingAppConfig := saveConfigFile(project.Path, configRawData)

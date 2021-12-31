@@ -1,7 +1,6 @@
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
 	"github.com/UltiRequiem/nfacu/internal"
 	"os"
@@ -9,18 +8,10 @@ import (
 )
 
 func Main() {
-	configData, errorReadingConfig := os.ReadFile("nfacu.json")
+	projectsConfig, errorGettingConfig := getConfig("demo.json")
 
-	if errorReadingConfig != nil {
-		fmt.Printf("Error reading NFACU config file: %s\n", errorReadingConfig)
-	}
-
-	var projectsConfig internal.NFACUConfig
-
-	errorUnmarshalling := json.Unmarshal(configData, &projectsConfig)
-
-	if errorUnmarshalling != nil {
-		fmt.Printf("Error parsing NFACU config: %s\n", errorUnmarshalling)
+	if errorGettingConfig != nil {
+		fmt.Printf("Error getting config: %s\n", errorGettingConfig.Error())
 	}
 
 	for _, project := range projectsConfig {

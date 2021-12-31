@@ -1,20 +1,30 @@
-name: Build
+name: goreleaser
+
 on:
   push:
-    branches: [master]
-  pull_request:
-    branches: [master]
+    tags:
+      - "*"
+
+permissions:
+  contents: write
+
 jobs:
-  build:
+  goreleaser:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        go: ["1.17"]
-    name: Go ${{ matrix.go }} sample
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup go
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up Go
         uses: actions/setup-go@v2
         with:
-          go-version: ${{ matrix.go }}
-      - run: go build main.go
+          go-version: 1.17
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v2
+        with:
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

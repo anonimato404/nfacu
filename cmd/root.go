@@ -7,17 +7,24 @@ import (
 )
 
 func Main() {
-	projectsConfig, errorGettingConfig := getConfig("demo.json")
+
+	_, configPath := getArguments()
+
+	projectsConfig, errorGettingConfig := getConfig(configPath)
 
 	if errorGettingConfig != nil {
 		fmt.Printf("Error getting config: %s\n", errorGettingConfig.Error())
+                return
 	}
+
+	fmt.Println(fmt.Sprintf(`Config read from "%s".`, configPath))
 
 	for _, project := range projectsConfig {
 		rawProjectConfig, errorGettingProjectConfig := getProjectConfig(project.Path)
 
 		if errorGettingProjectConfig != nil {
 			fmt.Printf("Error getting project config: %s\n", errorGettingProjectConfig.Error())
+                        return
 		}
 
 		configRawData := ""

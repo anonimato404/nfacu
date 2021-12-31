@@ -2,10 +2,9 @@ package cmd
 
 import (
 	"encoding/json"
+	"github.com/UltiRequiem/nfacu/internal"
 	"os"
 	"strings"
-
-	"github.com/UltiRequiem/nfacu/internal"
 )
 
 func getConfig(configFilePath string) (internal.NFACUConfig, error) {
@@ -44,4 +43,12 @@ func saveConfigFile(path, parsedConfig string) error {
 	}
 
 	return nil
+}
+
+func getArguments() string {
+	if len(os.Args) > 1 {
+		return os.Args[1]
+	}
+
+	return "nfacu.json"
 }

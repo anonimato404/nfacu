@@ -41,7 +41,7 @@ Then run
 nfacu
 ```
 
-That will modify the properties of all the `App.Config` files
+That will modify the properties of the `App.config` files
 in the array with the specified settings.
 
 By default nfacu search for a `nfacu.json` file,
@@ -50,7 +50,7 @@ but it can also receive another file as parameter
 Example
 
 ```
-nfacu nfacu-hulk.json
+nfacu hulk.json
 ```
 
 Check [`DotnetSample/`](./DotnetSample/) for a better understanding of this tool.

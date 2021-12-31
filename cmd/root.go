@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/UltiRequiem/nfacu/internal"
 	"strings"
+
+	"github.com/UltiRequiem/nfacu/internal"
 )
 
 func Main() {
@@ -17,7 +18,7 @@ func Main() {
 		return
 	}
 
-	fmt.Println(fmt.Sprintf(`Config read from "%s".`, configPath))
+	fmt.Printf(`Config read from "%s".`+"\n", configPath)
 
 	for _, project := range projectsConfig {
 		rawProjectConfig, errorGettingProjectConfig := getProjectConfig(project.Path)
@@ -27,17 +28,23 @@ func Main() {
 			return
 		}
 
+		fmt.Printf("\n"+`Reading %s `+"\n", project.Path)
+
 		configRawData := ""
 
 		for _, line := range rawProjectConfig {
 			for key := range project.Settings {
 				if strings.Contains(line, fmt.Sprintf(`"%s"`, key)) {
 					configRawData += internal.ParseLine(key, project.Settings[key])
+					fmt.Printf(`Changing "%s" property to "%s" on "%s".`+"\n", key, project.Settings[key], project.Path)
 				} else {
 					configRawData += line
 				}
 
-				configRawData += "\n"
+				if !(line == "\n") {
+					configRawData += "\n"
+				}
+
 				break
 			}
 		}
@@ -49,7 +56,7 @@ func Main() {
 			return
 		}
 
-                fmt.Printf("%s updated successfully!\n", project.Path)
+		fmt.Printf("\n%s updated successfully!\n", project.Path)
 
 	}
 

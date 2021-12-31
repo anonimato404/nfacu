@@ -18,6 +18,6 @@ namespace DotnetSample
         }
 
         public static IEnumerable<Tuple<string, string>> GetConfigurationValues() => ConfigurationManager.AppSettings
-            .AllKeys.Select(key => Tuple.Create(key, ConfigurationManager.AppSettings[key])).ToList();
+           .AllKeys.Select(key => Tuple.Create(key, ConfigurationManager.AppSettings[key])).ToList();
     }
 }

@@ -3,7 +3,6 @@ package cmd
 import (
 	"fmt"
 	"github.com/UltiRequiem/nfacu/internal"
-	"os"
 	"strings"
 )
 
@@ -15,34 +14,27 @@ func Main() {
 	}
 
 	for _, project := range projectsConfig {
+		rawProjectConfig, errorGettingProjectConfig := getProjectConfig(project.Path)
 
-		projectConfig, errorReadingProjectConfig := os.ReadFile(project.Path)
-
-		if errorReadingProjectConfig != nil {
-			fmt.Printf("Error reading project %s config: %s\n", project.Path, errorReadingProjectConfig)
+		if errorGettingProjectConfig != nil {
+			fmt.Printf("Error getting project config: %s\n", errorGettingProjectConfig.Error())
 		}
-
-		temp := strings.Split(string(projectConfig), "\n")
 
 		configRawData := ""
 
-		for _, line := range temp {
+		for _, line := range rawProjectConfig {
 			for key := range project.Settings {
 				if strings.Contains(line, fmt.Sprintf(`"%s"`, key)) {
-					configRawData += internal.ParseLine(key, project.Settings[key]) + "\n"
-					break
+					configRawData += internal.ParseLine(key, project.Settings[key])
 				} else {
-					configRawData += line + "\n"
-					break
+					configRawData += line
 				}
+
+				configRawData += "\n"
+				break
 			}
 		}
 
-		errorWritingProjectConfig := os.WriteFile(project.Path, []byte(configRawData), 0644)
-
-		if errorWritingProjectConfig != nil {
-			fmt.Printf("Error writing project %s config: %s\n", project.Path, errorWritingProjectConfig)
-		}
 	}
 
 }

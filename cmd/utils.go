@@ -2,8 +2,10 @@ package cmd
 
 import (
 	"encoding/json"
-	"github.com/UltiRequiem/nfacu/internal"
 	"os"
+	"strings"
+
+	"github.com/UltiRequiem/nfacu/internal"
 )
 
 func getConfig(configFilePath string) (internal.NFACUConfig, error) {
@@ -22,4 +24,24 @@ func getConfig(configFilePath string) (internal.NFACUConfig, error) {
 	}
 
 	return projectsConfig, nil
+}
+
+func getProjectConfig(path string) ([]string, error) {
+	projectConfig, errorReadingProjectConfig := os.ReadFile(path)
+
+	if errorReadingProjectConfig != nil {
+		return nil, errorReadingProjectConfig
+	}
+
+	return strings.Split(string(projectConfig), "\n"), nil
+}
+
+func saveConfigFile(path, parsedConfig string) error {
+	errorWritingProjectConfig := os.WriteFile(path, []byte(parsedConfig), 0644)
+
+	if errorWritingProjectConfig != nil {
+		return errorWritingProjectConfig
+	}
+
+	return nil
 }

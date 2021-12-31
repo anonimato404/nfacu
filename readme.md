@@ -41,11 +41,11 @@ Then run
 nfacu
 ```
 
-That will modify the properties of the `App.config` files
-in the array with the specified settings.
+That will modify the properties of the `App.config` files in the array with the
+specified settings.
 
-By default nfacu search for a `nfacu.json` file,
-but it can also receive another file as parameter
+By default nfacu search for a `nfacu.json` file, but it can also receive another
+file as parameter
 
 Example
 
@@ -53,7 +53,8 @@ Example
 nfacu hulk.json
 ```
 
-Check [`DotnetSample/`](./DotnetSample/) for a better understanding of this tool.
+Check [`DotnetSample/`](./DotnetSample/) for a better understanding of this
+tool.
 
 Made at request of [@eliasbobadilla](https://github.com/eliasbobadilla).
 

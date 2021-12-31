@@ -14,7 +14,7 @@ func Main() {
 
 	if errorGettingConfig != nil {
 		fmt.Printf("Error getting config: %s\n", errorGettingConfig.Error())
-                return
+		return
 	}
 
 	fmt.Println(fmt.Sprintf(`Config read from "%s".`, configPath))
@@ -24,7 +24,7 @@ func Main() {
 
 		if errorGettingProjectConfig != nil {
 			fmt.Printf("Error getting project config: %s\n", errorGettingProjectConfig.Error())
-                        return
+			return
 		}
 
 		configRawData := ""
@@ -41,6 +41,15 @@ func Main() {
 				break
 			}
 		}
+
+		errorSavingAppConfig := saveConfigFile(project.Path, configRawData)
+
+		if errorGettingProjectConfig != nil {
+			fmt.Printf("Error saving project config: %s\n", errorSavingAppConfig.Error())
+			return
+		}
+
+                fmt.Printf("%s updated successfully!\n", project.Path)
 
 	}
 
